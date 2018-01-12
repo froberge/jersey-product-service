@@ -1,0 +1,34 @@
+package com.thecat.menuService.endpoint;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.json.simple.JSONObject;
+
+/**
+ * Service use to get a menu
+ * 
+ * @author froberge
+ * @since January 2017
+ */
+@Path( "/menu" )
+public class MenuServiceEndpoint {	
+
+	
+    /**
+     * Endpoint responsible to return the menu
+     * 
+     * @param UserJson user
+     * @return
+     */
+	@POST
+	@Produces( MediaType.APPLICATION_JSON )
+	@Consumes( MediaType.APPLICATION_JSON )
+    public Response menu() {
+        return Response.ok().build();
+	}
+}
