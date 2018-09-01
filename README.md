@@ -1,9 +1,8 @@
-# MenuService
+# ProductService
 
-This is a java service that is use return the menu for the apps, such as the CoffeeShop app.
+This is a java service that is use to interact with the product of a given company or shop.
 
 #Here how to [contribute](CONTRIBUTING.md)
-
 
 This is a maven project so just import in your favorite IDE and it should work.
 
