@@ -1,4 +1,4 @@
-package com.thecat.menuService.filters;
+package com.thecat.productService.filters;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 
  * @author froberge
  */
 public class CORSFilter implements javax.servlet.Filter {

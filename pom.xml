@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.thecat</groupId>
-  <artifactId>MenuService</artifactId>
+  <artifactId>ProductService</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>MenuService</name>
-  <description>Service that is use to log information of the application</description>
+  <name>ProductService</name>
+  <description>Service use to interact with the different poroducts</description>
 
     <properties>
             <resteasy.version>3.1.4.Final</resteasy.version>
@@ -51,6 +51,6 @@
         </dependency>
     </dependencies>
   <build>
-    <finalName>MenuService</finalName>
+    <finalName>ProductService</finalName>
   </build>
 </project>

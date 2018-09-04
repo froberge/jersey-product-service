@@ -1,9 +1,9 @@
-package com.thecat.menuService;
+package com.thecat.productService;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import com.thecat.menuService.endpoint.MenuServiceEndpoint;
+import com.thecat.productService.endpoint.ProductServiceEndpoint;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,11 +13,11 @@ import java.util.Set;
  * @author froberge
  */
 @ApplicationPath("api")
-public class MenuServiceConfig  extends Application {
+public class ProductServiceConfig extends Application {
     private Set<Object> singletons = new HashSet<>();
 
-    public MenuServiceConfig() {
-        singletons.add(new MenuServiceEndpoint());
+    public ProductServiceConfig() {
+        singletons.add(new ProductServiceEndpoint());
     }
 
     @Override

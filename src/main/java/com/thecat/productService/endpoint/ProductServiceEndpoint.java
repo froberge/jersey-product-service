@@ -1,4 +1,4 @@
-package com.thecat.menuService.endpoint;
+package com.thecat.productService.endpoint;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -8,13 +8,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * Service use to get a menu
+ * Service use to interact with the product
  * 
  * @author froberge
- * @since January 2017
+ * @since September 20189
  */
-@Path( "/menu" )
-public class MenuServiceEndpoint {	
+@Path( "/product" )
+public class ProductServiceEndpoint {
 
 	
     /**
@@ -26,7 +26,7 @@ public class MenuServiceEndpoint {
 	@POST
 	@Produces( MediaType.APPLICATION_JSON )
 	@Consumes( MediaType.APPLICATION_JSON )
-    public Response menu() {
+    public Response product() {
         return Response.ok().build();
 	}
 }

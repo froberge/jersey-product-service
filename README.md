@@ -7,5 +7,5 @@ This is a java service that is use to interact with the product of a given compa
 This is a maven project so just import in your favorite IDE and it should work.
 
 Should run in a multitude of application server.  Has been tested with:
-* Wildfly 10.1
+* Wildfly 10.1 and 12.
 * Openshift Container Platform ( OCP ) using S2I
