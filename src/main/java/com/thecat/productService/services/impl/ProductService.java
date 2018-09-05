@@ -1,7 +1,6 @@
 package com.thecat.productService.services.impl;
 
 import com.thecat.productService.entities.Product;
-import org.json.simple.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
