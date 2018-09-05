@@ -5,6 +5,7 @@ import com.thecat.productService.services.impl.ProductService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -53,5 +54,26 @@ public class ProductServiceEndpoint {
 	public List<Product> selectProductByName(@PathParam( "name" ) String name) {
 
 		return ProductService.getInstance().findProductsByName( name );
+	}
+
+	/**
+	 * register action
+	 *
+	 * @param {@link UserJson} user
+	 * @return
+	 */
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path( "/createSchema" )
+	public Response createSchema() {
+		boolean b = ProductService.getInstance().createSchema();
+
+		if (b) {
+			return Response.ok().entity( "Database was successfully created" ).build();
+		} else {
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("Could not create database")
+					.build();
+		}
 	}
 }
