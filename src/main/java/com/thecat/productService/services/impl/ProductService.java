@@ -12,6 +12,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 
@@ -84,8 +86,12 @@ public class ProductService {
 			StringBuilder sb = new StringBuilder();
 			String line;
 
-			System.out.println( "Response " + response.lines().toString() );
+			List<String> productList = response.lines().collect(Collectors.toList());
+			System.out.println( "List Size :  " + productList.size() + "\n" );
 
+			for (int i = 0; i < productList.size(); i++) {
+				System.out.println( "product :  " + productList.get(i) + "\n" );
+			}
 
 			while ((line = response.readLine()) != null) {
 				sb.append( line );
