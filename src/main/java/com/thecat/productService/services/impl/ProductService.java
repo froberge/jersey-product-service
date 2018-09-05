@@ -91,7 +91,7 @@ public class ProductService {
 				sb.append(line);
 			}
 
-			String a = sb.toString().replace( "[ ","" );
+			String a = sb.toString().replace( "[","" );
 			String b = a.replace("]", "" );
 			String finalString = b.replace("},{", "};{" );
 
