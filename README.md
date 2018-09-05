@@ -1,13 +1,14 @@
 # ProductService
 
-This is a java service that is use to interact with the product of a given company or shop.
+This service handle all the interaction with the product.
+The code was made using a POSTGRESQL Database
+The script to create the database can be found in the folder dbscripts
+This is a maven project so just import in your favorite IDE and it should work.
 
 #Here how to [contribute](CONTRIBUTING.md)
 
-This is a maven project so just import in your favorite IDE and it should work.
-
 Should run in a multitude of application server.  Has been tested with:
-* Wildfly 10.1 and 12.
+* Wildfly 10.1 +
 * Openshift Container Platform ( OCP ) using S2I
 
 ---
@@ -22,4 +23,4 @@ GET | /search/{name} | Retrieve all products with {name} in their name not case 
 GET | /createSchema | Create or recreate the product Schema
 
 ---
-##### The service can be tested using Postman using a JSON object using this information.
+##### The service can be tested using Postman using a JSON object using this information
