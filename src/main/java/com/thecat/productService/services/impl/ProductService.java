@@ -44,9 +44,9 @@ public class ProductService {
 	 * 
 	 * @throws IOException
 	 */
-	public Product selectAllProduct() { // throws IOException {
+	public List<Product> selectAllProduct() { // throws IOException {
 
-		Product listProduct = null;
+		List<Product> listProduct = null;
 
 		try {
 			URL url = new URL("http://dbservice:8080/DatabaseService/api/db/products");
@@ -61,7 +61,7 @@ public class ProductService {
 				throw new RuntimeException( "Failed : HTTP error code : " + conn.getResponseCode() );
 			}
 
-			listProduct = parseListOutput(new BufferedReader(new InputStreamReader((conn.getInputStream()))));
+			listProduct = parseListProductOutput(new BufferedReader(new InputStreamReader((conn.getInputStream()))));
 			conn.disconnect();
 
 		} catch (MalformedURLException e) {
@@ -80,12 +80,11 @@ public class ProductService {
 	 * @param response {@link BufferedReader}
 	 * @return
 	 */
-	private Product parseListOutput(BufferedReader response) throws IOException {
+	private List<Product> parseListProductOutput(BufferedReader response) throws IOException {
 		try {
 			List<Product> listProduct = new ArrayList<>();
 			StringBuilder sb = new StringBuilder();
 			String line;
-
 
 			while ((line = response.readLine()) != null) {
 				sb.append(line);
@@ -95,39 +94,23 @@ public class ProductService {
 			String b = a.replace("]", "" );
 			String finalString = b.replace("},{", "};{" );
 
-			System.out.println( "new string " + finalString );
-
 			String[] stringArray = finalString.split(";" );
 
-			for (int i = 0; i < stringArray.length ; i++) {
+			for (int i = 0; i <= stringArray.length ; i++) {
 				System.out.println( "line [ " + i + "] = " + stringArray[i] + "\n" );
 				JSONObject obj = new JSONObject( stringArray[i] );
-				System.out.println( "name " + obj.getString( "id") );
+				Product p = new Product();
+				p.setId( obj.getString( "id") );
+				p.setName( obj.getString( "name") );
+				p.setCategory( obj.getString( "category") );
+				p.setSubCategory_1( obj.getString( "subCategory_1") );
+				p.setSubCategory_2( obj.getString( "subCategory_2") );
+				p.setPrice( obj.getString( "price") );
+
+				listProduct.add( p );
 			}
-//				System.out.println( "first line " + line + "\n" );
-//				JSONObject obj = new JSONObject( sb.toString() );
 
-/*				Product p = new Product();
-				p.setId("1");
-				p.setName("test product");
-				p.setCategory("category");
-				p.setSubCategory_1("subcategory 1");
-				p.setSubCategory_2("subcategory 2");
-				p.setPrice("100.00");
-*/
-
-//			JSONObject obj = new JSONObject(sb.toString());
-			Product p = new Product();
-			p.setId("1");
-			p.setName("test product");
-			p.setCategory("category");
-			p.setSubCategory_1("subcategory 1");
-			p.setSubCategory_2("subcategory 2");
-			p.setPrice("100.00");
-
-//			User user = new User();
-//			user.setUsername(obj.getString("username"));
-			return p;
+			return listProduct;
 		} catch (IOException ioe) {
 			throw ioe;
 		}

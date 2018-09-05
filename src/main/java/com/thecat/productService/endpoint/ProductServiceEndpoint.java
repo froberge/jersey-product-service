@@ -24,8 +24,9 @@ public class ProductServiceEndpoint {
      */
 	@GET
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
-    public Product product() {
-        return ProductService.getInstance().selectAllProduct();
+    public List<Product> product() {
+
+		return ProductService.getInstance().selectAllProduct();
 	}
 
 	/**
@@ -37,6 +38,7 @@ public class ProductServiceEndpoint {
 	@Path("{id}")
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
 	public Product findById(@PathParam( "id" ) String id) {
+
 		return new Product();
 	}
 
@@ -48,7 +50,8 @@ public class ProductServiceEndpoint {
 	@GET
 	@Path("search/{name}")
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
-	public Product findByName(@PathParam( "name" ) String name) {
+	public List<Product> findByName(@PathParam( "name" ) String name) {
+
 		return ProductService.getInstance().selectAllProduct();
 	}
 
