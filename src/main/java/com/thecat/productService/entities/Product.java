@@ -1,8 +1,5 @@
 package com.thecat.productService.entities;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
 public class Product {
 
 	private String id;

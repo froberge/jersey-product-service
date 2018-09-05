@@ -21,7 +21,7 @@ GET | ../api/search/{name} | Retrieve all products with {name} in their name
 GET | ../api/products/{id} | Retrieve product with id  = {id}
 
 
-
+---
 ##### The service can be tested using Postman using a JSON object using this information.
 
 Header: Content-Type application/json
