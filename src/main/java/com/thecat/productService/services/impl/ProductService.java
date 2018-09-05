@@ -2,6 +2,7 @@ package com.thecat.productService.services.impl;
 
 import com.thecat.productService.entities.Product;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,8 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 /**
  * 
@@ -86,15 +86,19 @@ public class ProductService {
 			StringBuilder sb = new StringBuilder();
 			String line;
 
-			List<String> productList = response.lines().collect(Collectors.toList());
-			System.out.println( "List Size :  " + productList.size() + "\n" );
-
-			for (int i = 0; i < productList.size(); i++) {
-				System.out.println( "product :  " + productList.get(i) + "\n" );
-			}
 
 			while ((line = response.readLine()) != null) {
-				sb.append( line );
+				sb.append(line);
+			}
+
+			System.out.println( "the list look like that: " + sb.toString() +"\n" );
+
+			String[] listArray = sb.toString().split("," );
+
+			for (int i = 0; i <listArray.length ; i++) {
+				JSONObject obj = new JSONObject( listArray[i] );
+				System.out.println( "name " + obj.getString( "id") );
+			}
 //				System.out.println( "first line " + line + "\n" );
 //				JSONObject obj = new JSONObject( sb.toString() );
 
@@ -105,7 +109,7 @@ public class ProductService {
 				p.setSubCategory_1("subcategory 1");
 				p.setSubCategory_2("subcategory 2");
 				p.setPrice("100.00");
-*/			}
+*/
 
 //			JSONObject obj = new JSONObject(sb.toString());
 			Product p = new Product();
