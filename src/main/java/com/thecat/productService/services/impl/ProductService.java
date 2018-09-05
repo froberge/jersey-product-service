@@ -96,8 +96,9 @@ public class ProductService {
 			String[] listArray = sb.toString().split("," );
 
 			for (int i = 0; i <listArray.length ; i++) {
-				JSONObject obj = new JSONObject( listArray[i] );
-				System.out.println( "name " + obj.getString( "id") );
+//				JSONObject obj = new JSONObject( listArray[i] );
+//				System.out.println( "name " + obj.getString( "id") );
+				System.out.println( "line [ " + i + "] = " + listArray[i] + "\n" );
 			}
 //				System.out.println( "first line " + line + "\n" );
 //				JSONObject obj = new JSONObject( sb.toString() );
