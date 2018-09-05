@@ -1,6 +1,7 @@
 package com.thecat.productService.services.impl;
 
 import com.thecat.productService.entities.Product;
+import org.apache.http.protocol.HTTP;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,16 +52,12 @@ public class ProductService {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
 			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Accept", "application/json");
 			conn.setRequestProperty("Content-Type", "application/json");
 
-			OutputStream os = conn.getOutputStream();
-//			os.write(parseInput(emailAddress, password).getBytes());
-			os.flush();
-
-			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+			if ( conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				throw new RuntimeException( "Failed : HTTP error code : " + conn.getResponseCode() );
 			}
-
 
 			listProduct = parseListOutput(new BufferedReader(new InputStreamReader((conn.getInputStream()))));
 			conn.disconnect();
