@@ -81,22 +81,25 @@ public class ProductService {
 	private Product parseListOutput(BufferedReader response) throws IOException {
 		try {
 			List<Product> listProduct = new ArrayList<>();
-//			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 			String line;
 
+			System.out.println( "Response " + response.lines().toString() );
+
+
 			while ((line = response.readLine()) != null) {
-//				sb.append( line );
-				System.out.println( "first line " + line + "\n" );
+				sb.append( line );
+//				System.out.println( "first line " + line + "\n" );
 //				JSONObject obj = new JSONObject( sb.toString() );
 
-				Product p = new Product();
+/*				Product p = new Product();
 				p.setId("1");
 				p.setName("test product");
 				p.setCategory("category");
 				p.setSubCategory_1("subcategory 1");
 				p.setSubCategory_2("subcategory 2");
 				p.setPrice("100.00");
-			}
+*/			}
 
 //			JSONObject obj = new JSONObject(sb.toString());
 			Product p = new Product();
