@@ -1,4 +1,4 @@
-# ProductService
+# Product Service
 
 This service handle all the interaction with the product.
 The code was made using a POSTGRESQL Database
