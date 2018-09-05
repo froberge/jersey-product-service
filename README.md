@@ -16,10 +16,10 @@ The REST API consists of the following methods:
 
 Method  |  URL  |  Action
 --------|-------|--------------
-GET | ../api/products  | Retrieve all the products
-GET | ../api/search/{name} | Retrieve all products with {name} in their name
-GET | ../api/products/{id} | Retrieve product with id  = {id}
-
+GET | /products  | Retrieve all the products
+GET | /products/{id} | Retrieve product with id  = {id}
+GET | /search/{name} | Retrieve all products with {name} in their name not case sensitive
+GET | /createSchema | Create or recreate the product Schema
 
 ---
 ##### The service can be tested using Postman using a JSON object using this information.
