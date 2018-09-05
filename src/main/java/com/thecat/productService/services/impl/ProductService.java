@@ -94,9 +94,9 @@ public class ProductService {
 			String b = a.replace("]", "" );
 			String finalString = b.replace("},{", "};{" );
 
-			String[] stringArray = finalString.split(";" );
+			String[] stringArray = finalString.trim().split(";" );
 
-			for (int i = 0; i <= stringArray.length ; i++) {
+			for (int i = 0; i < stringArray.length ; i++) {
 				System.out.println( "line [ " + i + "] = " + stringArray[i] + "\n" );
 				JSONObject obj = new JSONObject( stringArray[i] );
 				Product p = new Product();
