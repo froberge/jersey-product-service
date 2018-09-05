@@ -35,7 +35,7 @@ public class ProductService {
 	 * 
 	 * @throws IOException
 	 */
-	public List<Product> selectAllProduct() throws IOException {
+	public List<Product> selectAllProduct() { // throws IOException {
 
 		List<Product> returnList = new ArrayList<>();
 

@@ -1,6 +1,7 @@
 package com.thecat.productService.endpoint;
 
 import com.thecat.productService.entities.Product;
+import com.thecat.productService.services.impl.ProductService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -25,6 +26,6 @@ public class ProductServiceEndpoint {
 	@GET
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
     public List<Product> product() {
-        return Response.ok().build();
+        return ProductService.getInstance().selectAllProduct();
 	}
 }
