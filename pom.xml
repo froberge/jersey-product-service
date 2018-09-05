@@ -5,7 +5,7 @@
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>ProductService</name>
-  <description>Service use to interact with the different poroducts</description>
+  <description>Service use to interact with the different products</description>
 
     <properties>
             <resteasy.version>3.1.4.Final</resteasy.version>
