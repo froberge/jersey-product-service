@@ -93,12 +93,15 @@ public class ProductService {
 
 			System.out.println( "the list look like that: " + sb.toString() +"\n" );
 
-			String[] listArray = sb.toString().split("," );
+			String newString = sb.toString().replace("},{", "};{" );
+			System.out.println ( "String after repalce " + newString );
 
-			for (int i = 0; i <listArray.length ; i++) {
+			String[] stringArray = newString.split(";" );
+
+			for (int i = 0; i < stringArray.length ; i++) {
 //				JSONObject obj = new JSONObject( listArray[i] );
 //				System.out.println( "name " + obj.getString( "id") );
-				System.out.println( "line [ " + i + "] = " + listArray[i] + "\n" );
+				System.out.println( "line [ " + i + "] = " + stringArray[i] + "\n" );
 			}
 //				System.out.println( "first line " + line + "\n" );
 //				JSONObject obj = new JSONObject( sb.toString() );
