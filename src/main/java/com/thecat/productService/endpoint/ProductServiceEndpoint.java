@@ -5,7 +5,6 @@ import com.thecat.productService.services.impl.ProductService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -28,4 +27,30 @@ public class ProductServiceEndpoint {
     public List<Product> product() {
         return ProductService.getInstance().selectAllProduct();
 	}
+
+	/**
+	 * Endpoint responsible to return a product
+	 *
+	 * @return
+	 */
+	@GET
+	@Path("{id}")
+	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
+	public Product findById(@PathParam( "id" ) String id) {
+		return new Product();
+	}
+
+	/**
+	 * Endpoint responsible to return a product with a given name
+	 *
+	 * @return
+	 */
+	@GET
+	@Path("search/{name}")
+	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
+	public List<Product> findByName(@PathParam( "name" ) String name) {
+		return ProductService.getInstance().selectAllProduct();
+	}
+
+
 }

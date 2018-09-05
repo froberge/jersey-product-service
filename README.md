@@ -12,20 +12,16 @@ Should run in a multitude of application server.  Has been tested with:
 
 ---
 
-### The service can be tested using Postman using a JSON object using this information.
+The REST API consists of the following methods:
 
-Header
+Method  |  URL  |  Action
+--------|-------|--------------
+GET | ../api/products  | Retrieve all the products
+GET | ../api/search/{name} | Retrieve all products with {name} in their name
+GET | ../api/products/{id} | Retrieve product with id  = {id}
 
-Content-Type application/json
 
 
-Body
+##### The service can be tested using Postman using a JSON object using this information.
 
-raw  JSON
-
-{
-  "emailAdr": "default@coffeeshop.com",
-  "password": "default123"
-}
-
----
+Header: Content-Type application/json
