@@ -91,11 +91,13 @@ public class ProductService {
 				sb.append(line);
 			}
 
-			String[] stringArray = sb.toString()
-										.replace( "[ ","")
-										.replace("]","")
-										.replace("},{", "};{" )
-										.split(";" );
+			String newString = sb.toString().replace( "[ ","" );
+			newString.replace("]", "" );
+			newString.replace("},{", "};{" );
+
+			System.out.println( "new string " + newString );
+
+			String[] stringArray = newString.split(";" );
 
 			for (int i = 0; i < stringArray.length ; i++) {
 				System.out.println( "line [ " + i + "] = " + stringArray[i] + "\n" );
