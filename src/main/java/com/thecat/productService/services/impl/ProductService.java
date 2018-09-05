@@ -92,7 +92,8 @@ public class ProductService {
 			}
 
 			String[] stringArray = sb.toString()
-										.replace("[","")
+										.replace( "[ ","")
+										.replace("]","")
 										.replace("},{", "};{" )
 										.split(";" );
 
