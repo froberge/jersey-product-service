@@ -23,5 +23,3 @@ GET | /createSchema | Create or recreate the product Schema
 
 ---
 ##### The service can be tested using Postman using a JSON object using this information.
-
-Header: Content-Type application/json
