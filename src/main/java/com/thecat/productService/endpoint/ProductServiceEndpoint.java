@@ -5,6 +5,7 @@ import com.thecat.productService.services.impl.ProductService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,7 +53,7 @@ public class ProductServiceEndpoint {
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
 	public List<Product> findByName(@PathParam( "name" ) String name) {
 
-		return ProductService.getInstance().selectAllProduct();
+		return new ArrayList<Product>();
 	}
 
 

@@ -74,6 +74,7 @@ public class ProductService {
 		return listProduct;
 	}
 
+
 	/**
 	 * Create the response from what was return in the service.
 	 *
@@ -97,7 +98,6 @@ public class ProductService {
 			String[] stringArray = finalString.trim().split(";" );
 
 			for (int i = 0; i < stringArray.length ; i++) {
-				System.out.println( "line [ " + i + "] = " + stringArray[i] + "\n" );
 				JSONObject obj = new JSONObject( stringArray[i] );
 				Product p = new Product();
 				p.setId( obj.getString( "id") );
