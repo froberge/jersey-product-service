@@ -1,16 +1,9 @@
 package com.thecat.productService.services.impl;
 
 import com.thecat.productService.entities.Product;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,79 +33,200 @@ public class ProductService {
 	}
 
 	/**
-	 * Retrive a list of all the product
-	 * 
-	 * @throws IOException
+	 *  This method create a connection to the database.
+	 *
+	 * @return {@link Connection}
+	 * @throws Exception
 	 */
-	public List<Product> selectAllProduct() { // throws IOException {
+	private Connection getDatabaseConnection() throws Exception {
+		StringBuffer dbUrl = new StringBuffer( "jdbc:postgresql://" );
+		dbUrl.append( System.getenv( "POSTGRESQL_SERVICE_HOST" ) );
+		dbUrl.append( "/" );
+		dbUrl.append( System.getenv( "POSTGRESQL_DATABASE" ) );
 
-		List<Product> listProduct = null;
+		String username = System.getenv( "POSTGRESQL_USER" );
+		String password = System.getenv( "PGPASSWORD" );
 
 		try {
-			URL url = new URL("http://dbservice:8080/DatabaseService/api/db/products");
 
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setDoOutput(true);
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "application/json");
-			conn.setRequestProperty("Content-Type", "application/json");
+			Connection connection = DriverManager.getConnection( dbUrl.toString(), username, password );
 
-			if ( conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				throw new RuntimeException( "Failed : HTTP error code : " + conn.getResponseCode() );
+			if ( connection != null ) {
+				return connection;
+			} else {
+				return null;
 			}
+		} catch ( Exception e ) {
+			throw e;
+		}
+	}
 
-			listProduct = parseListProductOutput(new BufferedReader(new InputStreamReader((conn.getInputStream()))));
-			conn.disconnect();
+	/**
+	 * Create the product Schema inside the database for the applications
+	 * This is a work around to speed things up.
+	 *
+	 * @return boolean
+	 */
+	public boolean createSchema() {
 
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
+		boolean response = false;
+		BufferedReader in = null;
 
-		} catch (IOException e) {
-			e.printStackTrace();
+		try {
+			Connection connection = getDatabaseConnection();
+
+			if (connection != null) {
+				Statement stmt = connection.createStatement();
+				String scriptFile = "dbscripts/creationScript.sql";
+				in = new BufferedReader(new FileReader( scriptFile ) );
+				String line;
+				StringBuffer sb = new StringBuffer();
+
+				//Read the script
+				while ((line = in.readLine()) != null) {
+					sb.append(line + "\n ");
+				}
+
+				in.close();
+				stmt.executeUpdate(sb.toString());
+				response = true;
+			}
+		} catch( Exception e ) {
+			System.out.println("problem creating the script \n " + e.getMessage());
 		}
 
-		return listProduct;
+		return response;
 	}
 
 
 	/**
-	 * Create the response from what was return in the service.
+	 * Find all the product.
 	 *
-	 * @param response {@link BufferedReader}
 	 * @return
 	 */
-	private List<Product> parseListProductOutput(BufferedReader response) throws IOException {
+	public List<Product> findProducts() {
+		List<Product> productList = null;
+
 		try {
-			List<Product> listProduct = new ArrayList<>();
-			StringBuilder sb = new StringBuilder();
-			String line;
+			Connection connection = getDatabaseConnection();
 
-			while ((line = response.readLine()) != null) {
-				sb.append(line);
+			if ( connection != null ) {
+				String query = "select * from PRODUCTS";
+				PreparedStatement stmt = connection.prepareStatement(query);
+
+				ResultSet rs = stmt.executeQuery();
+
+				if (rs != null ) {
+					productList = parseProductResult( rs );
+				}
+
+				rs.close();
+				connection.close();
+			} else {
+				System.out.println( "no connection" );
 			}
-
-			String a = sb.toString().replace( "[","" );
-			String b = a.replace("]", "" );
-			String finalString = b.replace("},{", "};{" );
-
-			String[] stringArray = finalString.trim().split(";" );
-
-			for (int i = 0; i < stringArray.length ; i++) {
-				JSONObject obj = new JSONObject( stringArray[i] );
-				Product p = new Product();
-				p.setId( obj.getString( "id") );
-				p.setName( obj.getString( "name") );
-				p.setCategory( obj.getString( "category") );
-				p.setSubCategory_1( obj.getString( "subCategory_1") );
-				p.setSubCategory_2( obj.getString( "subCategory_2") );
-				p.setPrice( obj.getString( "price") );
-
-				listProduct.add( p );
-			}
-
-			return listProduct;
-		} catch (IOException ioe) {
-			throw ioe;
+		} catch (Exception e ) {
+			System.out.println( e );
 		}
+
+		return productList;
+	}
+
+	/**
+	 * Find a given product.
+	 *
+	 * @param id  {@link String}
+	 * @return {@link Product}
+	 */
+	public Product findProductById(String id) {
+		Product product = null;
+
+		try {
+			Connection connection = getDatabaseConnection();
+
+			if ( connection != null ) {
+				String query = "select * from PRODUCTS where id = ?";
+				PreparedStatement stmt = connection.prepareStatement(query);
+
+				stmt.setInt(1, Integer.parseInt(id) );
+
+				ResultSet rs = stmt.executeQuery();
+
+				if (rs != null ) {
+					product = parseProductResult( rs ).get(0);
+				}
+
+				rs.close();
+				connection.close();
+			} else {
+				System.out.println( "no connection" );
+			}
+		} catch (Exception e ) {
+			System.out.println( e );
+		}
+
+		return product;
+	}
+
+	/**
+	 * Find Products that contains the given name
+	 *
+	 * @param name
+	 * @return
+	 */
+	public List<Product> findProductsByName(String name) {
+		List<Product> productList = null;
+
+		try {
+			Connection connection = getDatabaseConnection();
+
+			if ( connection != null ) {
+				String query = "SELECT * FROM PRODUCTS\n" +
+						"WHERE UPPER(NAME) LIKE UPPER(?)";
+
+				PreparedStatement stmt = connection.prepareStatement(query);
+				stmt.setString(1, "%" + name + "%" );
+
+				ResultSet rs = stmt.executeQuery();
+
+				if (rs != null ) {
+					productList = parseProductResult( rs );
+				}
+
+				rs.close();
+				connection.close();
+			} else {
+				System.out.println( "no connection" );
+			}
+		} catch (Exception e ) {
+			System.out.println( e );
+		}
+
+		return productList;
+	}
+
+	/**
+	 * Parse the result from the database query.
+	 *
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
+	private List<Product> parseProductResult(ResultSet rs) throws SQLException {
+		List<Product> listProduct = new ArrayList<>();
+
+		while (rs.next() ) {
+			Product p  = new Product();
+			p.setId(rs.getString( "ID" ) );
+			p.setName( rs.getString( "NAME") );
+			p.setCategory( rs.getString( "CATEGORY" ) );
+			p.setSubCategory_1( rs.getString( "SUB_CATEGORY_1" ) );
+			p.setSubCategory_2( rs.getString( "SUB_CATEGORY_2" ) );
+			p.setPrice( rs.getString( "PRICE" ) );
+
+			listProduct.add( p );
+		}
+
+		return listProduct;
 	}
 }

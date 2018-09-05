@@ -5,7 +5,6 @@ import com.thecat.productService.services.impl.ProductService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,17 +16,16 @@ import java.util.List;
 @Path( "/products" )
 public class ProductServiceEndpoint {
 
-	
-    /**
-     * Endpoint responsible to return all the products
-     *
-     * @return
-     */
+	/**
+	 * Endpoint responsible to return all the products
+	 *
+	 * @return
+	 */
 	@GET
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
-    public List<Product> product() {
+	public List<Product> selectProducts() {
 
-		return ProductService.getInstance().selectAllProduct();
+		return ProductService.getInstance().findProducts();
 	}
 
 	/**
@@ -38,23 +36,22 @@ public class ProductServiceEndpoint {
 	@GET
 	@Path("{id}")
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
-	public Product findById(@PathParam( "id" ) String id) {
+	public Product selectByProductId(@PathParam( "id" ) String id) {
 
-		return new Product();
+		return ProductService.getInstance().findProductById( id );
 	}
 
 	/**
-	 * Endpoint responsible to return a product with a given name
+	 * Select a given product
 	 *
-	 * @return
+	 * @param name
+	 * return
 	 */
 	@GET
 	@Path("search/{name}")
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
-	public List<Product> findByName(@PathParam( "name" ) String name) {
+	public List<Product> selectProductByName(@PathParam( "name" ) String name) {
 
-		return new ArrayList<Product>();
+		return ProductService.getInstance().findProductsByName( name );
 	}
-
-
 }
