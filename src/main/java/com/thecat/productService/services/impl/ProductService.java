@@ -219,7 +219,7 @@ public class ProductService {
 			Product p  = new Product();
 			p.setId(rs.getString( "ID" ) );
 			p.setName( rs.getString( "NAME") );
-			p.setDescription( rs.getString( "DECRIPTION" ) );
+			p.setDescription( rs.getString( "DESCRIPTION" ) );
 			p.setCategory( rs.getString( "CATEGORY" ) );
 			p.setSubCategory_1( rs.getString( "SUB_CATEGORY_1" ) );
 			p.setSubCategory_2( rs.getString( "SUB_CATEGORY_2" ) );
