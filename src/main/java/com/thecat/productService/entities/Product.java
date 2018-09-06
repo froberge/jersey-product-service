@@ -7,6 +7,7 @@ public class Product {
 
 	private String id;
 	private String name;
+	private String description;
 	private String category;
 	private String subCategory_1;
 	private String subCategory_2;
@@ -38,6 +39,20 @@ public class Product {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return {@link String}
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description {@link String}
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	/**
@@ -102,6 +117,7 @@ public class Product {
 
 		sb.append("id [ " + this.id + "]\n");
 		sb.append("name [ " + this.name + "]\n");
+		sb.append("description [ " + this.description + "]\n");
 		sb.append("category [ " + this.category + "]\n");
 		sb.append("Sub Category 1 [ " + this.subCategory_1 + "]\n");
 		sb.append("Sub Category 2 [ " + this.subCategory_2 + "]\n");
