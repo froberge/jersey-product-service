@@ -55,6 +55,6 @@
               <directory>dbscripts</directory>
           </resource>
       </resources>
-    <finalName>ProductService</finalName>
+    <finalName>productService</finalName>
   </build>
 </project>
