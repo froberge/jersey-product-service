@@ -1,31 +1,32 @@
-package com.thecat.productService.endpoint;
+package com.thecat.productService.api;
 
-import com.thecat.productService.entities.Product;
+import com.thecat.productService.model.Product;
 import com.thecat.productService.services.impl.ProductService;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
  * Service use to interact with the product
  * 
  * @author froberge
- * @since September 20189
+ * @since September 2018
  */
-@Path( "/products" )
-public class ProductServiceEndpoint {
+@Path( "/product" )
+public class ProductResource {
 
 	/**
-	 * Endpoint responsible to return all the products
-	 *
-	 * @return
+	 * List at the products available.
+	 * @return List
 	 */
 	@GET
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
-	public List<Product> selectProducts() {
-
+	public List<Product> listProducts() {
+		System.out.println( "list product" );
 		return ProductService.getInstance().findProducts();
 	}
 
@@ -38,7 +39,7 @@ public class ProductServiceEndpoint {
 	@Path("{id}")
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
 	public Product selectByProductId(@PathParam( "id" ) String id) {
-
+		System.out.println( "get product id" );
 		return ProductService.getInstance().findProductById( id );
 	}
 
@@ -49,31 +50,17 @@ public class ProductServiceEndpoint {
 	 * return
 	 */
 	@GET
-	@Path("search/{name}")
+	@Path("/search/{name}")
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
 	public List<Product> selectProductByName(@PathParam( "name" ) String name) {
-
+		System.out.println( "in the search" );
 		return ProductService.getInstance().findProductsByName( name );
 	}
 
-	/**
-	 * register action
-	 *
-	 * @param {@link UserJson} user
-	 * @return
-	 */
-	@GET
-	@Produces({MediaType.APPLICATION_JSON})
-	@Path( "/createSchema" )
-	public Response createSchema() {
-		boolean b = ProductService.getInstance().createSchema();
-
-		if (b) {
-			return Response.ok().entity( "Database was successfully created" ).build();
-		} else {
-			return Response.status(Response.Status.BAD_REQUEST)
-					.entity("Could not create database")
-					.build();
-		}
-	}
+    @GET
+	@Path( "/health")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String health() {
+        return "SUCCESS";
+    }
 }

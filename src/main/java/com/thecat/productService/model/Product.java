@@ -1,29 +1,27 @@
-package com.thecat.productService.entities;
+package com.thecat.productService.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name = "product")
 public class Product {
 
-	private String id;
+	private int id;
 	private String name;
 	private String description;
-	private String category;
-	private String subCategory_1;
-	private String subCategory_2;
+	private String size;
 	private String price;
 
 	/**
-	 * @return {@link String}
+	 * @return {@link int}
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
 	/**
-	 * @param id {@link String}
+	 * @param id {@link int}
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -58,43 +56,15 @@ public class Product {
 	/**
 	 * @return {@link String}
 	 */
-	public String getCategory() {
-		return category;
+	public String getSize() {
+		return size;
 	}
 
 	/**
-	 * @param category {@link String}
+	 * @param size {@link String}
 	 */
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	/**
-	 * @return {@link String}
-	 */
-	public String getSubCategory_1() {
-		return subCategory_1;
-	}
-
-	/**
-	 * @param subCategory_1 {@link String}
-	 */
-	public void setSubCategory_1(String subCategory_1) {
-		this.subCategory_1 = subCategory_1;
-	}
-
-	/**
-	 * @return {@link String}
-	 */
-	public String getSubCategory_2() {
-		return subCategory_2;
-	}
-
-	/**
-	 * @param subCategory_2 {@link String}
-	 */
-	public void setSubCategory_2(String subCategory_2) {
-		this.subCategory_2 = subCategory_2;
+	public void setSize(String size) {
+		this.size = size;
 	}
 
 	/**
@@ -118,12 +88,9 @@ public class Product {
 		sb.append("id [ " + this.id + "]\n");
 		sb.append("name [ " + this.name + "]\n");
 		sb.append("description [ " + this.description + "]\n");
-		sb.append("category [ " + this.category + "]\n");
-		sb.append("Sub Category 1 [ " + this.subCategory_1 + "]\n");
-		sb.append("Sub Category 2 [ " + this.subCategory_2 + "]\n");
+		sb.append("Size [ " + this.size + "]\n");
 		sb.append("Price [ " + this.price + "]\n");
 
 		return sb.toString();
 	}
-
 }

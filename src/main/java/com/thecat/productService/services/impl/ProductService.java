@@ -1,11 +1,14 @@
 package com.thecat.productService.services.impl;
 
-import com.thecat.productService.entities.Product;
-
-import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import com.thecat.productService.model.Product;
 
 
 /**
@@ -39,65 +42,28 @@ public class ProductService {
 	 * @throws Exception
 	 */
 	private Connection getDatabaseConnection() throws Exception {
-		StringBuffer dbUrl = new StringBuffer( "jdbc:postgresql://" );
-		dbUrl.append( System.getenv( "POSTGRESQL_SERVICE_HOST" ) );
-		dbUrl.append( "/" );
-		dbUrl.append( System.getenv( "POSTGRESQL_DATABASE" ) );
 
-		String username = System.getenv( "POSTGRESQL_USER" );
-		String password = System.getenv( "PGPASSWORD" );
+		System.out.println( "getDatabaseConnection" );
+
+		Context context = new InitialContext();
+		Context envContext = (Context) context.lookup( "java:/comp/env");
+
+		DataSource dataSource = (DataSource) envContext.lookup("jdbc/postgres");
 
 		try {
-
-			Connection connection = DriverManager.getConnection( dbUrl.toString(), username, password );
+			Connection connection = dataSource.getConnection();
 
 			if ( connection != null ) {
+				System.out.println( "got a connection" );
 				return connection;
 			} else {
 				return null;
 			}
 		} catch ( Exception e ) {
+			System.out.println("connect " + e );
 			throw e;
 		}
 	}
-
-	/**
-	 * Create the product Schema inside the database for the applications
-	 * This is a work around to speed things up.
-	 *
-	 * @return boolean
-	 */
-	public boolean createSchema() {
-
-		boolean response = false;
-		BufferedReader in = null;
-
-		try {
-			Connection connection = getDatabaseConnection();
-
-			if (connection != null) {
-				Statement stmt = connection.createStatement();
-				String scriptFile = "dbscripts/creationScript.sql";
-				in = new BufferedReader(new FileReader( scriptFile ) );
-				String line;
-				StringBuffer sb = new StringBuffer();
-
-				//Read the script
-				while ((line = in.readLine()) != null) {
-					sb.append(line + "\n ");
-				}
-
-				in.close();
-				stmt.executeUpdate(sb.toString());
-				response = true;
-			}
-		} catch( Exception e ) {
-			System.out.println("problem creating the script \n " + e.getMessage());
-		}
-
-		return response;
-	}
-
 
 	/**
 	 * Find all the product.
@@ -111,12 +77,14 @@ public class ProductService {
 			Connection connection = getDatabaseConnection();
 
 			if ( connection != null ) {
-				String query = "select * from PRODUCTS";
+				System.out.println( "find product" );
+				String query = "select * from cs_product.product";
 				PreparedStatement stmt = connection.prepareStatement(query);
 
 				ResultSet rs = stmt.executeQuery();
 
 				if (rs != null ) {
+					System.out.println( "rs not null" );
 					productList = parseProductResult( rs );
 				}
 
@@ -145,7 +113,7 @@ public class ProductService {
 			Connection connection = getDatabaseConnection();
 
 			if ( connection != null ) {
-				String query = "select * from PRODUCTS where id = ?";
+				String query = "select * from CS_PRODUCT.PRODUCT where id = ?";
 				PreparedStatement stmt = connection.prepareStatement(query);
 
 				stmt.setInt(1, Integer.parseInt(id) );
@@ -181,7 +149,7 @@ public class ProductService {
 			Connection connection = getDatabaseConnection();
 
 			if ( connection != null ) {
-				String query = "SELECT * FROM PRODUCTS\n" +
+				String query = "SELECT * FROM CS_PRODUCT.PRODUCT\n" +
 						"WHERE UPPER(NAME) LIKE UPPER(?)";
 
 				PreparedStatement stmt = connection.prepareStatement(query);
@@ -217,13 +185,11 @@ public class ProductService {
 
 		while (rs.next() ) {
 			Product p  = new Product();
-			p.setId(rs.getString( "ID" ) );
-			p.setName( rs.getString( "NAME") );
-			p.setDescription( rs.getString( "DESCRIPTION" ) );
-			p.setCategory( rs.getString( "CATEGORY" ) );
-			p.setSubCategory_1( rs.getString( "SUB_CATEGORY_1" ) );
-			p.setSubCategory_2( rs.getString( "SUB_CATEGORY_2" ) );
-			p.setPrice( rs.getString( "PRICE" ) );
+			p.setId(rs.getInt( "id" ) );
+			p.setName( rs.getString( "name") );
+			p.setDescription( rs.getString( "description" ) );
+			p.setSize( rs.getString( "size" ) );
+			p.setPrice( rs.getString( "price" ) );
 
 			listProduct.add( p );
 		}
