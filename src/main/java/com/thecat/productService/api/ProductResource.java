@@ -26,7 +26,6 @@ public class ProductResource {
 	@GET
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
 	public List<Product> listProducts() {
-		System.out.println( "list product" );
 		return ProductService.getInstance().findProducts();
 	}
 
@@ -39,7 +38,6 @@ public class ProductResource {
 	@Path("{id}")
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
 	public Product selectByProductId(@PathParam( "id" ) String id) {
-		System.out.println( "get product id" );
 		return ProductService.getInstance().findProductById( id );
 	}
 
@@ -53,7 +51,6 @@ public class ProductResource {
 	@Path("/search/{name}")
 	@Produces( {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML} )
 	public List<Product> selectProductByName(@PathParam( "name" ) String name) {
-		System.out.println( "in the search" );
 		return ProductService.getInstance().findProductsByName( name );
 	}
 

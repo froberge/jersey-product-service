@@ -42,9 +42,6 @@ public class ProductService {
 	 * @throws Exception
 	 */
 	private Connection getDatabaseConnection() throws Exception {
-
-		System.out.println( "getDatabaseConnection" );
-
 		Context context = new InitialContext();
 		Context envContext = (Context) context.lookup( "java:/comp/env");
 
@@ -54,13 +51,11 @@ public class ProductService {
 			Connection connection = dataSource.getConnection();
 
 			if ( connection != null ) {
-				System.out.println( "got a connection" );
 				return connection;
 			} else {
 				return null;
 			}
 		} catch ( Exception e ) {
-			System.out.println("connect " + e );
 			throw e;
 		}
 	}
@@ -77,14 +72,12 @@ public class ProductService {
 			Connection connection = getDatabaseConnection();
 
 			if ( connection != null ) {
-				System.out.println( "find product" );
 				String query = "select * from cs_product.product";
 				PreparedStatement stmt = connection.prepareStatement(query);
 
 				ResultSet rs = stmt.executeQuery();
 
 				if (rs != null ) {
-					System.out.println( "rs not null" );
 					productList = parseProductResult( rs );
 				}
 
