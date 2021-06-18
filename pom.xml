@@ -56,6 +56,19 @@
 			<id>openshift</id>
 			<build>
 				<plugins>
+          <plugin>
+              <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                  <configuration>
+                      <includeEmptyDirs>true</includeEmptyDirs>
+                      <outputDirectory>${basedir}/opt/webserver/lib</outputDirectory>
+                      <resources>          
+                          <resource>
+                              <directory>dependencies</directory>
+                          </resource>
+                      </resources>              
+                  </configuration>            
+              </plugin>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
 						<version>3.3.1</version>
