@@ -61,7 +61,7 @@
                 <version>2.4.3</version>
                   <configuration>
                       <includeEmptyDirs>true</includeEmptyDirs>
-                      <outputDirectory>${basedir}/opt/webserver/lib</outputDirectory>
+                      <outputDirectory>${basedir}/target/lib</outputDirectory>
                       <resources>          
                           <resource>
                               <directory>dependencies</directory>
