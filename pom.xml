@@ -44,6 +44,7 @@
   <build>
     <finalName>productservice</finalName>
   </build>
+  <profiles>
 		<profile>
 			<!-- When built in OpenShift the 'openshift' profile will be used when 
 				invoking mvn. -->
@@ -57,13 +58,14 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
-						<version>${version.war.plugin}</version>
+						<version>3.3.1</version>
 						<configuration>
 							<outputDirectory>deployments</outputDirectory>
-							<warName>ROOT</warName>
+							<warName>productservice</warName>
 						</configuration>
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
+  </profiles>
 </project>
