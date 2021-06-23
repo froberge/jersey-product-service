@@ -11,8 +11,8 @@
         <ul>
             <li>/product</li>
             <li>/product/{id}</li>
-            <li>/search/{name}</li>
-            <li>/search/health</li>
+            <li>/product/search/{name}</li>
+            <li>/product/health</li>
         </ul>
     </body>
 </html>
