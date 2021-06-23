@@ -21,11 +21,10 @@ This options implies that everything runnign inside the tomcat uses the same dat
     mvn clean package
     ```
 * Build the docker image
-    * Go to the *docker/tomcat-no-context*
-        * execute the following command
-        ```
-        docker build -t [image_name] .
-        ```
+    * execute the following command
+    ```
+    docker build -f docker/tomcat-no-context/Dockerfile -t [image_name] .
+    ```
 
 #### Option #2 - Define database at the application level
 This options implies that only that application will be connected to the database instance. Give you more flexibility.
@@ -55,11 +54,9 @@ This options implies that only that application will be connected to the databas
     mvn clean package
     ```
 * Build the docker image
-    * Go to the *docker/tomcat-context*
-        * execute the following command
-        ```
-        docker build -t [image_name] .
-        ```
+    ```
+    docker build -f docker/tomcat-context/Dockerfile -t [image_name] .
+    ```
 
 
 #### Running the application
