@@ -13,7 +13,7 @@
             <li>api/product/{id}</li>
             <li>api/product/search/{name}</li>
             <li>api/product/health</li>
-            <li>api/createschema</li>
+            <li>api/product/createschema</li>
         </ul>
     </body>
 </html>

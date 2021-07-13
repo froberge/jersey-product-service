@@ -11,7 +11,7 @@ The code used environment variable to connect to the required PostgreSQL databas
 
 ## Steps to build the image
 
-1. Add the proper information in the file env-files.txt.  There is 4 environment variable that need to be define.
+1. Add the proper information in the file [docker/tomcat/env-files.txt](../docker/tomcat/env-files.txt).  There is 4 environment variable that need to be define.
 ```
 POSTGRESQL_SERVICE_HOST=[HOST_NAME]
 POSTGRESQL_DATABASE=[DATABASE_NAME]
@@ -25,7 +25,7 @@ POSTGRESQL_PASSWORD=[DB_PASSWORD]
     ```
 3. Build the docker image
     ```
-    docker build -f docker/tomcat-sys-env/Dockerfile -t [image_name] .
+    docker build -f docker/tomcat/Dockerfile -t [image_name] .
    ```
 
 
@@ -34,7 +34,7 @@ POSTGRESQL_PASSWORD=[DB_PASSWORD]
 Once you have build the applicaiton, the only thing left to do it to run the docker image.
 
 ```
-docker run -d --env-file docker/tomcat-no-context/env-file.txt --name=[POD_NAME] -p 8080:8080 [IMAGE_NAME]:[TAG] 
+docker run -d --env-file docker/tomcat/env-file.txt --name=[POD_NAME] -p 8080:8080 [IMAGE_NAME]:[TAG] 
 ```
 
 The appplication is accessible in your favorite browser at:

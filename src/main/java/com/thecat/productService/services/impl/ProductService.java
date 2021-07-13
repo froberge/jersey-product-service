@@ -204,14 +204,14 @@ public class ProductService {
 
 		boolean response = false;
 		BufferedReader in = null;
+		String creationScript = System.getenv( "CREATION_SCRIPT" );
 
 		try {
 			Connection connection = getDatabaseConnection();
 
 			if (connection != null) {
 				Statement stmt = connection.createStatement();
-				String scriptFile = "../dbscripts/createInsertProduct.sql";
-				in = new BufferedReader(new FileReader( scriptFile ) );
+				in = new BufferedReader(new FileReader( creationScript ) );
 				String line;
 				StringBuffer sb = new StringBuffer();
 

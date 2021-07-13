@@ -1,5 +1,5 @@
-DROP SEQUENCE IF EXISTS cs.prpduct."product_seq"
-DROP TABLE IF EXISTS cs_product."prouct";
+DROP TABLE IF EXISTS cs_product."product";
+DROP SEQUENCE IF EXISTS cs_prpduct."product_seq";
 DROP SCHEMA IF EXISTS cs_product;
 
 CREATE SCHEMA cs_product;
