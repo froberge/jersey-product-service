@@ -1,12 +1,15 @@
 package com.thecat.productService.services.impl;
 
-import java.sql.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 
 import com.thecat.productService.model.Product;
 
@@ -42,14 +45,15 @@ public class ProductService {
 	 * @throws Exception
 	 */
 	private Connection getDatabaseConnection() throws Exception {
-		Context context = new InitialContext();
-		Context envContext = (Context) context.lookup( "java:/comp/env");
-
-		DataSource dataSource = (DataSource) envContext.lookup("jdbc/postgres");
+		String databaseURL = "jdbc:postgresql://";
+		databaseURL += System.getenv( "POSTGRESQL_SERVICE_HOST" );
+		databaseURL += "/" + System.getenv( "POSTGRESQL_DATABASE" );
+		String username = System.getenv( "POSTGRESQL_USER" );
+		String password= System.getenv( "POSTGRESQL_PASSWORD" );
 
 		try {
-			Connection connection = dataSource.getConnection();
-
+			
+			Connection connection = DriverManager.getConnection( databaseURL, username, password );
 			if ( connection != null ) {
 				return connection;
 			} else {
@@ -188,5 +192,45 @@ public class ProductService {
 		}
 
 		return listProduct;
+	}
+
+	/**
+	 * Create the product Schema inside the database for the applications
+	 * This is a work around to speed things up.
+	 *
+	 * @return boolean
+	 */
+	public boolean createSchema() {
+
+		boolean response = false;
+		BufferedReader in = null;
+
+		try {
+			Connection connection = getDatabaseConnection();
+
+			if (connection != null) {
+				Statement stmt = connection.createStatement();
+				String scriptFile = "../dbscripts/createInsertProduct.sql";
+				in = new BufferedReader(new FileReader( scriptFile ) );
+				String line;
+				StringBuffer sb = new StringBuffer();
+
+				//Read the script
+				while ((line = in.readLine()) != null) {
+					sb.append(line + "\n ");
+				}
+
+				in.close();
+
+
+				System.out.println( " statement to execute " + sb.toString() );
+				stmt.executeUpdate(sb.toString());
+				response = true;
+			}
+		} catch( Exception e ) {
+			System.out.println("problem creating the script \n " + e.getMessage());
+		}
+
+		return response;
 	}
 }
