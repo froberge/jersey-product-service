@@ -60,4 +60,11 @@ public class ProductResource {
     public String health() {
         return "SUCCESS";
     }
+
+	@GET
+	@Path( "/createschema" )
+	@Produces(MediaType.TEXT_PLAIN)
+	public String createSchema() {
+		return (ProductService.getInstance().createSchema()) ? "SUCCESS": "FALSE";
+	}
 }

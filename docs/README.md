@@ -7,64 +7,34 @@ The required dependencies are found in the dependencies folder. If you need to a
 The service uses [Eclispe Jersey](https://eclipse-ee4j.github.io/jersey/) to expose Jeysey RESTful webservice and connect to a [PostgresSQL](https://www.postgresql.org/) database.
 
 
-There is 2 options to connect a database inside tomcat Webserver and run this application
+The code used environment variable to connect to the required PostgreSQL database.
 
-#### Option #1 - Define database at the tomcat level
+## Steps to build the image
 
-This options implies that everything runnign inside the tomcat uses the same database connection info. This option should be privilege for configuration that need to be generic.
+1. Add the proper information in the file [docker/tomcat/env-files.txt](../docker/tomcat/env-files.txt).  There is 4 environment variable that need to be define.
+```
+POSTGRESQL_SERVICE_HOST=[HOST_NAME]
+POSTGRESQL_DATABASE=[DATABASE_NAME]
+POSTGRESQL_USER=[DB_USERNAME]
+POSTGRESQL_PASSWORD=[DB_PASSWORD]
+```
 
-###### Step to follow:
-
-* Define the database connection by adding your database information in the following file *conf/context.xml*.
-* Build the application with maven
+2. Build the application with maven
     ```
     mvn clean package
     ```
-* Build the docker image
-    * execute the following command
+3. Build the docker image
     ```
-    docker build -f docker/tomcat-no-context/Dockerfile -t [image_name] .
-    ```
-
-#### Option #2 - Define database at the application level
-This options implies that only that application will be connected to the database instance. Give you more flexibility.
-
-###### Step to follow:
-
-* Define at the the database connection by adding a context.xml file in the following folder. *webapp/META-INF/context.xml*.  The file should look like that:
-```
-<?xml version='1.0' encoding='utf-8'?>
-
-<Context>
-    <!-- Database resource -->
-    <Resource name="jdbc/postgres"
-              auth="Container"
-              type="javax.sql.DataSource"
-              driverClassName="org.postgresql.Driver"
-              username="DATABASE_USERNAME"
-              password="DATABASE_PASSWORD"
-              url="DATABASE_URL"
-              maxTotal="20"
-              maxIdle="10"
-             maxWaitMillis="-1"/>
-</Context>
-```
-* Build the application with maven
-    ```
-    mvn clean package
-    ```
-* Build the docker image
-    ```
-    docker build -f docker/tomcat-context/Dockerfile -t [image_name] .
-    ```
+    docker build -f docker/tomcat/Dockerfile -t [image_name] .
+   ```
 
 
-#### Running the application
+## Step to run the image
 
-Once you have build the applicaiton using one of the previous options, the only thing left to do it to run the docker image.
+Once you have build the applicaiton, the only thing left to do it to run the docker image.
 
 ```
-docker run -p 8080:8080 [image_name]:[tag] 
+docker run -d --env-file docker/tomcat/env-file.txt --name=[POD_NAME] -p 8080:8080 [IMAGE_NAME]:[TAG] 
 ```
 
 The appplication is accessible in your favorite browser at:
@@ -86,3 +56,4 @@ GET | /api/product  | Retrieve all the products
 GET | /api/products/{id} | Retrieve product with id  = {id}
 GET | /api/product/search/{name} | Retrieve all products with {name}. Not case 
 GET | /api/product/health | See if the service is up and running
+GET | /api/product/createschema | create the database schema

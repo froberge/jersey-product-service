@@ -2,7 +2,6 @@ FROM tomcat:jdk11-adoptopenjdk-hotspot
 LABEL maintainer="froberge@redhat.com"
 
 # Add the context.xml file
-ADD conf/context.xml /usr/local/tomcat/conf/
 ADD dependencies/. /usr/local/tomcat/lib/
 ADD target/productservice.war /usr/local/tomcat/webapps/
 
